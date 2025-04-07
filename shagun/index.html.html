@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shagun Gardens</title>
+  <!-- Google Fonts: Montserrat for headings, Roboto for body -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" 
+        integrity="sha512-Fo3rlrZj/k7ujTnH2N0H8v6W2GwT6ZjU5dUZ8SJbE6vjklTsdZ8kD0KvmVz6k1PqCq1D/W66P8O9Wth7s6tT4g==" 
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    /* Reset & Base */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #fffacd 0%, #ffffff 100%);
+      color: #333;
+      line-height: 1.6;
+    }
+    a { text-decoration: none; }
+
+    /* Navbar */
+    nav {
+      background: #800000;
+      padding: 1rem 2rem;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+    nav ul {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+    }
+    nav ul li {
+      margin: 0 15px;
+    }
+    nav ul li a {
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: color 0.3s, transform 0.3s;
+    }
+    nav ul li a:hover {
+      color: #ffd700;
+      transform: translateY(-3px);
+    }
+
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      background: url('img/hero.jpg') center/cover no-repeat;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.3);
+    }
+    .hero-content {
+      position: relative;
+      background: rgba(0,0,0,0.7);
+      padding: 30px 40px;
+      border-radius: 8px;
+      text-align: center;
+      color: #fff;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeIn 1s forwards 0.5s;
+      transition: background 0.3s;
+    }
+    .hero-content:hover {
+      background: rgba(0,0,0,0.8);
+    }
+    .hero-content h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    .hero-content p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    /* Button Styles */
+    .btn {
+      background: #ffd700;
+      color: #800000;
+      padding: 12px 25px;
+      border-radius: 5px;
+      font-weight: 700;
+      font-family: 'Montserrat', sans-serif;
+      cursor: pointer;
+      animation: pulse 2s infinite;
+      transition: transform 0.3s;
+      display: inline-block;
+    }
+    .btn:hover {
+      transform: scale(1.1);
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        box-shadow: 0 0 5px rgba(255,215,0,0.7);
+        transform: scale(1);
+      }
+      50% {
+        box-shadow: 0 0 20px rgba(255,215,0,0.7);
+        transform: scale(1.05);
+      }
+    }
+
+    /* Section Titles */
+    .section-title {
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 2.2rem;
+      color: #800000;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+    }
+    section {
+      padding: 100px 20px;
+    }
+
+    /* About Section */
+    .about {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+    }
+    .about video {
+      width: 100%;
+      max-width: 500px;
+      border-radius: 10px;
+      background: #000;
+      padding: 10px;
+      transition: transform 0.3s;
+    }
+    .about video:hover {
+      transform: scale(1.03);
+    }
+    .about-content {
+      max-width: 600px;
+      padding: 20px;
+    }
+    .about-content h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+    .about-content p {
+      margin-bottom: 15px;
+    }
+
+    /* Gallery Section */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .gallery img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 10px;
+      transition: transform 0.3s;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeIn 1s forwards;
+    }
+    .gallery img:hover {
+      transform: scale(1.03);
+    }
+    .gallery img:nth-child(1) { animation-delay: 0.3s; }
+    .gallery img:nth-child(2) { animation-delay: 0.5s; }
+    .gallery img:nth-child(3) { animation-delay: 0.7s; }
+    .gallery img:nth-child(4) { animation-delay: 0.9s; }
+
+    /* Ceremonies Section */
+    .ceremonies {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .ceremony-box {
+      background: #fff;
+      border: 2px solid #800000;
+      border-radius: 10px;
+      text-align: center;
+      padding: 15px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeIn 1s forwards;
+    }
+    .ceremony-box video {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+    .ceremony-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .ceremony-box h3 {
+      font-family: 'Montserrat', sans-serif;
+      color: #800000;
+      margin-bottom: 10px;
+    }
+    .ceremony-box p {
+      font-size: 0.95rem;
+    }
+
+    /* Testimonial Slider */
+    .testimonial-slider {
+      position: relative;
+      overflow: hidden;
+      max-width: 1000px;
+      margin: 0 auto;
+      border: 2px solid #800000;
+      border-radius: 10px;
+    }
+    .slider-track {
+      display: flex;
+      width: calc(250px * 8);
+      animation: scrollTestimonials 20s linear infinite;
+    }
+    .testimonial-item {
+      flex: 0 0 250px;
+      margin: 10px;
+      background: #fff;
+      border: 2px solid #800000;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      font-family: 'Roboto', sans-serif;
+      color: #333;
+      transition: transform 0.3s;
+    }
+    .testimonial-item:hover {
+      transform: scale(1.03);
+    }
+    .testimonial-item p {
+      font-style: italic;
+      margin-bottom: 10px;
+    }
+    .testimonial-item h4 {
+      color: #800000;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      text-align: right;
+    }
+    @keyframes scrollTestimonials {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .testimonial-slider:hover .slider-track {
+      animation-play-state: paused;
+    }
+
+    /* Contact Section */
+    .contact {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+    }
+    .contact-info {
+      flex: 1;
+      min-width: 300px;
+      max-width: 400px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeIn 1s forwards 0.5s;
+    }
+    .map {
+      flex: 1;
+      min-width: 300px;
+      max-width: 400px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeIn 1s forwards 0.7s;
+    }
+    .map iframe {
+      width: 100%;
+      height: 300px;
+      border: none;
+      border-radius: 10px;
+    }
+
+    /* Footer */
+    footer {
+      background: #800000;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9rem;
+      font-family: 'Roboto', sans-serif;
+    }
+    footer p { margin: 5px 0; }
+
+    /* WhatsApp Button */
+    .whatsapp {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #25D366;
+      color: #fff;
+      padding: 15px;
+      border-radius: 50%;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      z-index: 1001;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .whatsapp:hover {
+      background: #1ebe5d;
+      transform: scale(1.05);
+    }
+    .whatsapp i {
+      font-size: 1.5rem;
+    }
+
+    /* Fade‑In Animation */
+    @keyframes fadeIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive */
+    @media(max-width:768px) {
+      .about { flex-direction: column; }
+      nav ul { flex-direction: column; }
+      nav ul li { margin: 10px 0; }
+      .hero-content h1 { font-size: 2.5rem; }
+      .hero-content p { font-size: 1rem; }
+      .slider-track { width: calc(250px * 4); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <ul>
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#ceremonies">Ceremonies</a></li>
+      <li><a href="#testimonials">Testimonials</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="hero" class="hero">
+    <div class="hero-content">
+      <h1>Shagun Gardens</h1>
+      <p>Experience Elegance & Grandeur on Your Special Day</p>
+      <a href="https://wa.me/919845584670" class="btn" target="_blank">Book Now</a>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about">
+    <div class="section-title">About Us</div>
+    <div class="about">
+      <video src="video/venue.mp4" controls autoplay muted loop playsinline></video>
+      <div class="about-content">
+        <h2>About Our Venue</h2>
+        <p>At Shagun Gardens, we offer a luxurious setting designed for your most memorable occasions. Our venue blends traditional grandeur with modern comforts to create an unforgettable experience.</p>
+        <p>Every detail is meticulously crafted to reflect the elegance and sophistication of your special day.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery Section -->
+  <section id="gallery">
+    <div class="section-title">Gallery</div>
+    <div class="gallery">
+      <img src="img/1.png" alt="Gallery Image 1">
+      <img src="img/2.png" alt="Gallery Image 2">
+      <img src="img/3.png" alt="Gallery Image 3">
+      <img src="img/4.png" alt="Gallery Image 4">
+    </div>
+  </section>
+
+  <!-- Ceremonies Section -->
+  <section id="ceremonies">
+    <div class="section-title">Our Ceremonies</div>
+    <div class="ceremonies">
+      <div class="ceremony-box">
+        <video src="video/wedding.mp4" autoplay muted loop playsinline></video>
+        <h3>Wedding Ceremony</h3>
+        <p>A traditional and unforgettable wedding ceremony.</p>
+      </div>
+      <div class="ceremony-box">
+        <video src="video/sangeet.mp4" autoplay muted loop playsinline></video>
+        <h3>Sangeet</h3>
+        <p>An evening filled with music, dance, and celebration.</p>
+      </div>
+      <div class="ceremony-box">
+        <video src="video/engagement.mp4" autoplay muted loop playsinline></video>
+        <h3>Engagement</h3>
+        <p>A joyful engagement celebration marking a new beginning.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonial Slider Section -->
+  <section id="testimonials">
+    <div class="section-title">Testimonials</div>
+    <div class="testimonial-slider">
+      <div class="slider-track">
+        <div class="testimonial-item">
+          <p>"Our wedding was a dream come true. The venue, service, and décor were beyond our expectations."</p>
+          <h4>- The Happy Couple</h4>
+        </div>
+        <div class="testimonial-item">
+          <p>"An unforgettable experience! Every detail was perfect, making our day truly special."</p>
+          <h4>- Satisfied Client</h4>
+        </div>
+        <div class="testimonial-item">
+          <p>"The ambiance and luxury of the venue set the perfect tone for our celebration."</p>
+          <h4>- Newlyweds</h4>
+        </div>
+        <div class="testimonial-item">
+          <p>"Exceptional service and breathtaking decor. Our guests couldn’t stop complimenting everything."</p>
+          <h4>- Delighted Couple</h4>
+        </div>
+        <div class="testimonial-item">
+          <p>"A perfect blend of tradition and modern elegance. It made our day extra special."</p>
+          <h4>- Happy Clients</h4>
+        </div>
+        <div class="testimonial-item">
+          <p>"Impeccable attention to detail. We felt like royalty throughout the entire event."</p>
+          <h4>- Royal Guests</h4>
+        </div>
+        <div class="testimonial-item">
+          <p>"The venue's charm and the team's professionalism exceeded our expectations."</p>
+          <h4>- Overjoyed Couple</h4>
+        </div>
+        <div class="testimonial-item">
+          <p>"A magical experience with stunning décor and a warm, inviting atmosphere."</p>
+          <h4>- Grateful Clients</h4>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <div class="section-title">Get in Touch</div>
+    <div class="contact">
+      <div class="contact-info">
+        <p>Dreaming of the perfect celebration? Let's make it a reality!</p>
+        <a href="https://wa.me/919845584670" class="btn" target="_blank">Book Now</a>
+      </div>
+      <div class="map">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d122844.56704268577!2d74.40559290079912!3d15.809609767283181!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m0!4m5!1s0x3bbf65c4a5e4bd51%3A0x11c7a6250b5e70f1!2sKhanapur%20Rd%2C%20Udyambag%2C%20Belagavi%2C%20Karnataka%20590014!3m2!1d15.809625299999999!2d74.4879947!5e0!3m2!1sen!2sin!4v1743934532916!5m2!1sen!2sin" 
+                allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Shagun Gardens. All Rights Reserved.</p>
+  </footer>
+
+  <!-- WhatsApp Button -->
+  <a href="https://wa.me/919845584670" class="whatsapp" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <!-- JS: Scroll Animations & Testimonial Auto‑Scroll -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const faders = document.querySelectorAll('.about, .gallery img, .ceremony-box, .testimonial-item, .contact-info, .map');
+      const appear = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) e.target.style.animation = 'fadeIn 1s forwards';
+        });
+      }, { threshold: 0.3 });
+      faders.forEach(el => appear.observe(el));
+    });
+  </script>
+</body>
+</html>
